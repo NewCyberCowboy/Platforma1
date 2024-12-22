@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Platforma.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Platforma.Data
 {
@@ -48,5 +49,7 @@ namespace Platforma.Data
 
             base.OnModelCreating(modelBuilder);
         }
+
+
     }
 }

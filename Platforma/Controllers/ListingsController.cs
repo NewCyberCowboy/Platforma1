@@ -20,7 +20,7 @@ namespace Platforma.Controllers
         // Список объявлений
         public IActionResult Index()
         {
-            var listings = _context.Listings.Include(id => id.Location).ToList();
+            var listings = _context.Listings.Include(l => l.Location).ToList();
             return View(listings);
         }
 
