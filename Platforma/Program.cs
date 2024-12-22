@@ -15,6 +15,10 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders();
 
+builder.Services.AddControllersWithViews();
+
+builder.Services.AddAuthorization();
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = "/Account/Login";
@@ -23,8 +27,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 var app = builder.Build();
 
+app.UseRouting();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
