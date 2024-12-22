@@ -23,6 +23,7 @@ namespace Platforma.Data
         public DbSet<Image> Images { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Listing> Listings { get; set; }
+        
         public DbSet<Sale> Sales { get; set; }
         public DbSet<Rental> Rentals { get; set; }
         public DbSet<Payment> Payments { get; set; }
@@ -34,6 +35,10 @@ namespace Platforma.Data
         {
             modelBuilder.Entity<UserRole>()
                 .HasKey(ur => new { ur.UserId, ur.RoleId });
+
+            modelBuilder.Entity<Listing>().ToTable("listings");
+
+            modelBuilder.Entity<Location>().ToTable("locations");
 
             modelBuilder.Entity<CategoryItem>()
                 .HasKey(ci => new { ci.CategoryId, ci.ItemId });
