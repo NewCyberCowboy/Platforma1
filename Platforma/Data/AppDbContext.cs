@@ -33,18 +33,24 @@ namespace Platforma.Data
         public DbSet<Message> Messages { get; set; }
         public DbSet<Review> Reviews { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserRole>()
                 .HasKey(ur => new { ur.UserId, ur.RoleId });
 
             modelBuilder.Entity<Listing>(entity =>
+
             {
+
                 entity.ToTable("listings");
 
                 entity.Property(e => e.ItemId).HasColumnName("item_id");
                 entity.Property(e => e.LocationId).HasColumnName("location_id");
-            });
+            }); 
 
             modelBuilder.Entity<Location>().ToTable("locations");
 
@@ -53,6 +59,11 @@ namespace Platforma.Data
 
             modelBuilder.Entity<RolePermission>()
                 .HasKey(rp => new { rp.RoleId, rp.PermissionId });
+            modelBuilder.Entity<Listing>()
+    .HasOne(l => l.Item)
+    .WithMany()
+    .HasForeignKey(l => l.ItemId);
+
 
             base.OnModelCreating(modelBuilder);
         }

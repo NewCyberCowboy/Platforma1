@@ -3,6 +3,7 @@ using Platforma.Data;
 using Platforma.Models;
 using System.Collections.Generic;
 using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace Platforma.Controllers
 
@@ -26,20 +27,13 @@ namespace Platforma.Controllers
         {
             // ¬ыборка данных дл€ отображени€ на главной странице
             var listings = _context.Listings
-                .OrderByDescending(l => l.PublishedAt)
-                .Take(10)
-                .ToList();
 
-            var reviews = _context.Reviews
-                .OrderByDescending(r => r.Rating)
-                .Take(5)
-                .ToList();
+       .Include(l => l.Location)
+       .OrderByDescending(l => l.PublishedAt)
+       .Take(10)
+       .ToList();
 
-            return View(new HomeViewModel
-            {
-                Listings = listings,
-                Reviews = reviews
-            });
+            return View(listings);
         }
     }
 }
