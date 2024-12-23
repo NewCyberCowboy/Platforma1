@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Platforma.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using static Dapper.SqlMapper;
 
 namespace Platforma.Data
 {
@@ -37,7 +38,13 @@ namespace Platforma.Data
             modelBuilder.Entity<UserRole>()
                 .HasKey(ur => new { ur.UserId, ur.RoleId });
 
-            modelBuilder.Entity<Listing>().ToTable("listings");
+            modelBuilder.Entity<Listing>(entity =>
+            {
+                entity.ToTable("listings");
+
+                entity.Property(e => e.ItemId).HasColumnName("item_id");
+                entity.Property(e => e.LocationId).HasColumnName("location_id");
+            });
 
             modelBuilder.Entity<Location>().ToTable("locations");
 

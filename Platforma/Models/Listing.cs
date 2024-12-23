@@ -19,11 +19,11 @@ namespace Platforma.Models
         public string Status { get; set; }
         [Column("item_id")]
         public int ItemId { get; set; }
-        [Column("item")]
+        [ForeignKey("ItemId")]
         public Item Item { get; set; }
         [Column("locationid")]
         public int LocationId { get; set; }
-        [Column("location")]
+        [ForeignKey("LocationId")]
         public Location Location { get; set; }
     }
 }
